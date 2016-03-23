@@ -17,11 +17,11 @@ gambles(i).crand = 3;%gambles(i).ev.*.2.*rand + .1.*gambles(i).ev; %a random cer
 %simulate 1000 players with iCHASE
 
 phiStar = 0; %criterion
-pstay = 0; % going to set this at 0 and then move around. 
+pstay = .2; % going to set this at 0 and then move around. 
 tau = 1; %standard deviation of start point
-thresholdStar = 10; %threshold
+thresholdStar = 4; %threshold
 alpha = 1; %exponent for utility function (power function)
-gamma = 1; %sensitivity for prelec prob. weighting function
+gamma = 1.3; %sensitivity for prelec prob. weighting function
 
 
 pars(1) = phiStar; %criterion
@@ -62,10 +62,8 @@ histogram([trialStats.sampleSize],edges,'Normalization','probability');
 hold on
 plot(edges,PrT(:,1),'r')
 
-text(edges(round(length(edges)./2)),max(PrT),...
-    ['Sim Pr(H) = ' num2str(summaryStats.choiceProp) '; Sim E(n) =' num2str(summaryStats.meanSample)]);
-text(edges(round(length(edges)./2)),.7.*max(PrT),...
-    ['Est Pr(H) = ' num2str(summaryStats.preChoicePr) '; Est E(n) =' num2str(summaryStats.preMeanSample)]);
+text(edges(round(length(edges)./2),max(PrT),...
+    ['Sim Pr(H) = ' num2str(summaryStats.ChoiceProp) '; Sim E(n) =' num2str(summaryStats.meanSample)]);
 
 title('Marginal Sample Size')
 subplot(3,1,2)
@@ -113,12 +111,6 @@ histogram([trialStats.sampleSize],edges,'Normalization','probability');
 hold on
 plot(edges,PrT(:,1),'r')
 title('Marginal Sample Size')
-
-text(edges(round(length(edges)./2)),max(PrT),...
-    ['Sim Pr(H) = ' num2str(summaryStats.choiceProp) '; Sim E(n) =' num2str(summaryStats.meanSample)]);
-text(edges(round(length(edges)./2)),.7.*max(PrT),...
-    ['Est Pr(H) = ' num2str(summaryStats.preChoicePr) '; Est E(n) =' num2str(summaryStats.preMeanSample)]);
-
 subplot(3,1,2)
 histogram(nA,edges,'Normalization','probability');
 hold on

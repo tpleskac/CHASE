@@ -54,15 +54,18 @@ for sim = 1:10000;
             draw = draw + 1;
             %what do I observe
             action(draw) = -1;
-            observe(draw) = gambles(typeI).y;%assume going to see outcome y
-            omega = omega_y;
-            randObserve = rand;
-            if (randObserve<gambles(typeI).q)%with probability q see outcome x
-                observe(draw) = gambles(typeI).x;
-                omega = omega_x;
-            end;
+            %going to draw drawing a random normal
+            theObservation = (prospectEU - ptvalue(gambles(typeI).crand,alpha,beta,lambda))  + prospectSD.*randn; 
+            observe(draw) = theObservation; %gambles(typeI).y;%assume going to see outcome y
+            %omega = omega_y;
+            %randObserve = rand;
+            %if (randObserve<gambles(typeI).q)%with probability q see outcome x
+            %    observe(draw) = gambles(typeI).x;
+            %    omega = omega_x;
+            %end;
             %value observation
-            value(draw) = omega.*ptvalue(observe(draw),alpha,beta,lambda)-phi - ptvalue(gambles(typeI).crand,alpha,beta,lambda); 
+            %value(draw) = omega.*ptvalue(observe(draw),alpha,beta,lambda)-phi - ptvalue(gambles(typeI).crand,alpha,beta,lambda); 
+            value(draw) = observe(draw);
             %update preference
             randStay = rand;
             if (randStay<pstay)
@@ -104,12 +107,12 @@ for typeI = 1:length(gambles)
     [Q, R, Z, I] = CHASEChoiceMatrices(d, pstay, threshold, tau);
     [PrBPrA] = CHASEchoice(Q, R, Z, I);
     [EtBEtA] = CHASEExpDecSample(Q, R, Z, I, PrBPrA);
-    summaryStats(typeI).preChoicePr = PrBPrA(2);
-    summaryStats(typeI).preMeanSample = PrBPrA*EtBEtA'; 
     summaryStats(typeI).Q = Q;
     summaryStats(typeI).R = R;
     summaryStats(typeI).Z = Z;
     summaryStats(typeI).I = I;
+    summaryStats(typeI).preChoicePr = PrBPrA(2);
+    summaryStats(typeI).preMeanSample = PrBPrA*EtBEtA'; 
     
    %simulated data
    theChoice = [trialStats(typeI,:).choice];
