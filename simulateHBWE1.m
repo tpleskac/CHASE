@@ -19,7 +19,7 @@ gambles(i).crand = 3;%gambles(i).ev.*.2.*rand + .1.*gambles(i).ev; %a random cer
 phiStar = 0; %criterion
 pstay = 0; % going to set this at 0 and then move around. 
 tau = 1; %standard deviation of start point
-thresholdStar = 10; %threshold
+thresholdStar = 4; %threshold
 alpha = 1; %exponent for utility function (power function)
 gamma = 1; %sensitivity for prelec prob. weighting function
 
